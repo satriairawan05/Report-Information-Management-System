@@ -66,109 +66,120 @@ class ReportController extends Controller
         try {
             $this->get_access_page();
             if ($this->read == 1) {
+                $folderId = request()->input('folder_id');
+                $year = request()->input('year');
+                $month = request()->input('month');
                 if (auth()->user()->role_id == 1) {
-                    if (request()->has('month') && request()->has('year') && request()->has('folder_id')) {
-                        $report = Report::where('folder_id', request()->input('folder_id'))
-                            ->where('year', request()->input('year'))
-                            ->where('month', request()->input('month'))
+                    if ($month && $year && $folderId) {
+                        $reports = Report::where('folder_id', $folderId)
+                            ->where('year', $year)
+                            ->where('month', $month)
+                            ->latest('day')
                             ->get();
 
                         return view('admin.report.index4', [
                             'name' => $this->name,
                             'access' => $this->access,
-                            'reports' => $report
+                            'reports' => $reports,
                         ]);
-                    } else {
-                        if (request()->has('year') && request()->has('folder_id')) {
-                            $report = Report::where('folder_id', request()->input('folder_id'))
-                                ->where('year', request()->input('year'))
-                                ->get();
-
-                            return view('admin.report.index3', [
-                                'name' => $this->name,
-                                'access' => $this->access,
-                                'report' => $report
-                            ]);
-                        } else {
-                            if (request()->has('folder_id')) {
-                                $report = Report::where('folder_id', request()->input('folder_id'))->get();
-                                return view('admin.report.index2', [
-                                    'name' => $this->name,
-                                    'access' => $this->access,
-                                    'report' => $report
-                                ]);
-                            } else {
-                                // Admin: Ambil folder untuk admin atau milik user
-                                $folders = \App\Models\Folder::with('user')
-                                    ->where(function ($query) {
-                                        $query->where('is_for_admin', true)
-                                            ->orWhere('user_id', auth()->user()->id);
-                                    })
-                                    ->latest('id')
-                                    ->paginate(8);
-
-                                foreach ($folders as $folder) {
-                                    $reportCount = Report::where('folder_id', $folder->id)->where('user_id', auth()->user()->id)->count();
-                                }
-
-                                return view('admin.report.index', [
-                                    'name' => $this->name,
-                                    'folders' => $folders,
-                                    'reportCount' => $reportCount
-                                ]);
-                            }
-                        }
                     }
-                } else {
-                    if (request()->has('month') && request()->has('year') && request()->has('folder_id')) {
-                        $report = Report::where('folder_id', request()->input('folder_id'))
-                            ->where('year', request()->input('year'))
-                            ->where('month', request()->input('month'))
-                            ->get();
 
-                        return view('admin.report.index4', [
-                            'name' => $this->name,
-                            'access' => $this->access,
-                            'reports' => $report
-                        ]);
-                    } else {
-                    }
-                    if (request()->has('year') && request()->has('folder_id')) {
-                        $report = Report::where('folder_id', request()->input('folder_id'))
-                            ->where('year', request()->input('year'))
+                    if ($year && $folderId) {
+                        $reports = Report::where('folder_id', $folderId)
+                            ->where('year', $year)
                             ->get();
 
                         return view('admin.report.index3', [
                             'name' => $this->name,
                             'access' => $this->access,
-                            'report' => $report
+                            'report' => $reports,
                         ]);
-                    } else {
-                        if (request()->has('folder_id')) {
-                            $report = Report::where('folder_id', request()->input('folder_id'))->get();
-                            return view('admin.report.index2', [
-                                'name' => $this->name,
-                                'access' => $this->access,
-                                'report' => $report
-                            ]);
-                        } else {
-                            // User biasa: Hanya ambil folder milik user yang sedang login
-                            $folders = \App\Models\Folder::with('user')
-                                ->where('user_id', auth()->user()->id)
-                                ->latest('id')
-                                ->paginate(8);
-
-                            foreach ($folders as $folder) {
-                                $reportCount = Report::where('folder_id', $folder->id)->where('user_id', auth()->user()->id)->count();
-                            }
-
-                            return view('admin.report.index', [
-                                'name' => $this->name,
-                                'folders' => $folders,
-                                'reportCount' => $reportCount
-                            ]);
-                        }
                     }
+
+                    if ($folderId) {
+                        $reports = Report::where('folder_id', $folderId)->get();
+
+                        return view('admin.report.index2', [
+                            'name' => $this->name,
+                            'access' => $this->access,
+                            'report' => $reports,
+                        ]);
+                    }
+
+                    // Bagian ini tetap dipertahankan
+                    $folders = \App\Models\Folder::with('user')
+                        ->where(function ($query) {
+                            $query->where('is_for_admin', true)
+                                ->orWhere('user_id', auth()->user()->id);
+                        })
+                        ->latest('id')
+                        ->paginate(8);
+
+                    foreach ($folders as $folder) {
+                        $reportCount = Report::where('folder_id', $folder->id)
+                            ->where('user_id', auth()->user()->id)
+                            ->count();
+                    }
+
+                    return view('admin.report.index', [
+                        'name' => $this->name,
+                        'folders' => $folders,
+                        'reportCount' => $reportCount,
+                    ]);
+                } else {
+                    if ($month && $year && $folderId) {
+                        $reports = Report::where('folder_id', $folderId)
+                            ->where('year', $year)
+                            ->where('month', $month)
+                            ->latest('day')
+                            ->get();
+
+                        return view('admin.report.index4', [
+                            'name' => $this->name,
+                            'access' => $this->access,
+                            'reports' => $reports,
+                        ]);
+                    }
+
+                    if ($year && $folderId) {
+                        $reports = Report::where('folder_id', $folderId)
+                            ->where('year', $year)
+                            ->get();
+
+                        return view('admin.report.index3', [
+                            'name' => $this->name,
+                            'access' => $this->access,
+                            'report' => $reports,
+                        ]);
+                    }
+
+                    if ($folderId) {
+                        $reports = Report::where('folder_id', $folderId)->get();
+
+                        return view('admin.report.index2', [
+                            'name' => $this->name,
+                            'access' => $this->access,
+                            'report' => $reports,
+                        ]);
+                    }
+
+                    // Bagian ini tetap sesuai permintaan
+                    $folders = \App\Models\Folder::with('user')
+                        ->where('user_id', auth()->user()->id)
+                        ->latest('id')
+                        ->paginate(8);
+
+                    foreach ($folders as $folder) {
+                        $reportCount = Report::where('folder_id', $folder->id)
+                            ->where('user_id', auth()->user()->id)
+                            ->count();
+                    }
+
+                    return view('admin.report.index', [
+                        'name' => $this->name,
+                        'folders' => $folders,
+                        'reportCount' => $reportCount,
+                    ]);
                 }
             } else {
                 return redirect()->back()->with('failed', 'You not Have Authority!');
