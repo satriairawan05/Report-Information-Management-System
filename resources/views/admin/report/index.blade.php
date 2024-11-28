@@ -43,7 +43,7 @@
                                 </p>
                                 <p class="mb-1"><i
                                         class="fas fa-user {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
-                                    {{ $folder->user ? $folder->user->name : 'Unknown User' }}</p>
+                                    {{ $folder->user_id == auth()->user()->id ? 'Me' : $folder->user->name }}</p>
                                 <p class="mb-0"><i class="fas fa-file-archive {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
                                         {{ $reportCount }} Files</p>
                                 </p>
