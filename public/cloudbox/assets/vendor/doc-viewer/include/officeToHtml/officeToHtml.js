@@ -329,7 +329,7 @@
             id: "findInput",
             class: "toolbarField",
             title: "Find",
-            placeholder: "Find in document…",
+            placeholder: "Find in documentâ€¦",
             tabindex: "91",
             "data-l10n-id": "find_input"
         }).appendTo('div#' + divId + " .loadingInProgress #outerContainer #mainContainer #findbar #findbarInputContainer");
@@ -558,13 +558,13 @@
         $("<button></button>", {
             id: "pdfDocumentProperties",
             class: "secondaryToolbarButton pdfDocumentProperties hidden",
-            title: "Document Properties…",
+            title: "Document Propertiesâ€¦",
             tabindex: "62",
             "data-l10n-id": "document_properties"
         }).appendTo("div#" + divId + " .loadingInProgress #outerContainer #mainContainer #secondaryToolbar #secondaryToolbarButtonContainer");
         $("<span></span>", {
             "data-l10n-id": "document_properties_label",
-            text: "Document Properties…"
+            text: "Document Propertiesâ€¦"
         }).appendTo('div#' + divId + " .loadingInProgress #outerContainer #mainContainer #secondaryToolbar #secondaryToolbarButtonContainer #pdfDocumentProperties");
 
         $("<div></div>", {
@@ -1006,7 +1006,7 @@
         }).appendTo('div#' + divId + " .loadingInProgress #outerContainer #overlayContainer #printServiceOverlay .dialog");
         $("<span></span>", {
             "data-l10n-id": "print_progress_message",
-            text: "Preparing document for printing…"
+            text: "Preparing document for printingâ€¦"
         }).appendTo('div#' + divId + " .loadingInProgress #outerContainer #overlayContainer #printServiceOverlay .dialog #printFirsRwo");
         $("<div></div>", {
             class: "row",

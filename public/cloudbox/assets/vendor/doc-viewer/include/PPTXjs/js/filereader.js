@@ -154,7 +154,7 @@ See http://github.com/bgrins/filereader.js for documentation.
     }
     // setupFile: bind the 'change' event to an input[type=file]
     function setupBlob(blob, opts) {
-       
+
         if (!FileReaderJS.enabled) {
             return;
         }
@@ -162,15 +162,15 @@ See http://github.com/bgrins/filereader.js for documentation.
         if(blob.constructor !== Array && blob.constructor !== Function){
             if(blob.name === undefined){
                 blob.name = "blob";
-            }          
+            }
             blob = [blob];
         }else{
 
             if(blob[0].name === undefined){
                 blob[0].name = "blob";
-            }    
+            }
         }
-        
+
         var instanceOptions = extend(extend({}, FileReaderJS.opts), opts);
 
         processFileList(null, blob, instanceOptions);
@@ -453,3 +453,4 @@ See http://github.com/bgrins/filereader.js for documentation.
     FileReaderJS.enabled = true;
 
 })(this, document);
+
