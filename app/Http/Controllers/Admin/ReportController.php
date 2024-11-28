@@ -322,8 +322,6 @@ class ReportController extends Controller
                 ]);
 
                 if (!$validate->fails()) {
-                    dd($request->all());
-
                     $fileDoc = $request->file('documentation');
                     $fileExtension = strtolower($fileDoc->getClientOriginalExtension());
 
@@ -378,8 +376,44 @@ class ReportController extends Controller
                                     ->withInput();
                         }
                     } else {
-                    }
+                        switch (true) {
+                            case $fileExtension === 'pdf':
+                                // Logika untuk file PDF
+                                $report->documentation = $fileDoc->store('PortableDoc');
+                                break;
 
+                            case in_array($fileExtension, ['ppt', 'pptx']):
+                                // Logika untuk file PPT
+                                $report->documentation = $fileDoc->store('PowerPoint');
+                                break;
+
+                            case in_array($fileExtension, ['xls', 'xlsx']):
+                                // Logika untuk file Excel
+                                $report->documentation = $fileDoc->store('Excel');
+                                break;
+
+                            case in_array($fileExtension, ['doc', 'docx']):
+                                $report->documentation = $fileDoc->store('Document');
+                                // Logika untuk file Word
+                                break;
+
+                            case in_array($fileExtension, ['jpg', 'jpeg']):
+                                $report->documentation = $fileDoc->store('Image');
+                                // Logika untuk file JPG/JPEG
+                                break;
+
+                            case $fileExtension === 'png':
+                                $report->documentation = $fileDoc->store('Picture');
+                                // Logika untuk file PNG
+                                break;
+
+                            default:
+                                // Jika jenis file tidak sesuai
+                                return redirect()->back()
+                                    ->with('error', 'Unsupported file type.')
+                                    ->withInput();
+                        }
+                    }
 
                     $report->save();
 
