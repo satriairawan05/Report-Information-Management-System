@@ -269,7 +269,7 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table-borderless tbl-server-info mb-0 table">
+                                    <table class="table-borderless tbl-server-info mb-0 table" role="grid" id="user-list-table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Name</th>
