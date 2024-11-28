@@ -8158,7 +8158,7 @@
 
         function getVerticalAlign(node, slideLayoutSpNode, slideMasterSpNode, type, slideMasterTextStyles) {
             
-            // ä¸Šä¸­ä¸‹å°é½Š: X, <a:bodyPr anchor="ctr">, <a:bodyPr anchor="b">
+            // 上中下對齊: X, <a:bodyPr anchor="ctr">, <a:bodyPr anchor="b">
             var anchor = getTextByPathList(node, ["p:txBody", "a:bodyPr", "attrs", "anchor"]);
             if (anchor === undefined) {
                 anchor = getTextByPathList(slideLayoutSpNode, ["p:txBody", "a:bodyPr", "attrs", "anchor"]);
@@ -9633,32 +9633,32 @@
         }
         var hebrew2Minus = archaicNumbers([
                         [1000,''],
-                        [400,'×ª'],
-                        [300,'×©'],
-                        [200,'×¨'],
-                        [100,'×§'],
-                        [90,'×¦'],
-                        [80,'×¤'],
-                        [70,'×¢'],
-                        [60,'×¡'],
-                        [50,'× '],
-                        [40,'×ž'],
-                        [30,'×œ'],
-                        [20,'×›'],
-                        [10,'×™'],
-                        [9,'×˜'],
-                        [8,'×—'],
-                        [7,'×–'],
-                        [6,'×•'],
-                        [5,'×”'],
-                        [4,'×“'],
-                        [3,'×’'],
-                        [2,'×‘'],
-                        [1,'×'],
-                        [/×™×”/, '×˜×´×•'],
-                        [/×™×•/, '×˜×´×–'],
-                        [/([×-×ª])([×-×ª])$/, '$1×´$2'], 
-                        [/^([×-×ª])$/, "$1×³"] 
+                        [400,'ת'],
+                        [300,'ש'],
+                        [200,'ר'],
+                        [100,'ק'],
+                        [90,'צ'],
+                        [80,'פ'],
+                        [70,'ע'],
+                        [60,'ס'],
+                        [50,'נ'],
+                        [40,'מ'],
+                        [30,'ל'],
+                        [20,'כ'],
+                        [10,'י'],
+                        [9,'ט'],
+                        [8,'ח'],
+                        [7,'ז'],
+                        [6,'ו'],
+                        [5,'ה'],
+                        [4,'ד'],
+                        [3,'ג'],
+                        [2,'ב'],
+                        [1,'א'],
+                        [/יה/, 'ט״ו'],
+                        [/יו/, 'ט״ז'],
+                        [/([א-ת])([א-ת])$/, '$1״$2'], 
+                        [/^([א-ת])$/, "$1׳"] 
         ]); 
         function archaicNumbers(arr){
             var arrParse = arr.slice().sort(function (a,b) {return b[1].length - a[1].length});
