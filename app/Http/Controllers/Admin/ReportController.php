@@ -219,8 +219,8 @@ class ReportController extends Controller
             $this->get_access_page();
             if ($this->create == 1) {
                 $validate = \Illuminate\Support\Facades\Validator::make($request->all(), [
-                    'full_name' => 'required|max:255',
-                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg'
+                    'description' => 'required|max:255',
+                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg|max:5120'
                 ]);
 
                 if (!$validate->fails()) {
@@ -228,7 +228,7 @@ class ReportController extends Controller
                     $fileExtension = strtolower($fileDoc->getClientOriginalExtension());
 
                     $report = new Report;
-                    $report->full_name = $request->input('full_name');
+                    $report->description = $request->input('description');
                     $report->folder_id = $request->input('folder_id');
                     $report->user_id = auth()->user()->id;
                     $report->year = date('Y');
@@ -328,15 +328,15 @@ class ReportController extends Controller
             $this->get_access_page();
             if ($this->update == 1 && $report->user_id == auth()->user()->id) {
                 $validate = \Illuminate\Support\Facades\Validator::make($request->all(), [
-                    'full_name' => 'required|max:255',
-                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg'
+                    'description' => 'required|max:255',
+                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg|max:5120'
                 ]);
 
                 if (!$validate->fails()) {
                     $fileDoc = $request->file('documentation');
                     $fileExtension = strtolower($fileDoc->getClientOriginalExtension());
 
-                    $report->full_name = $request->input('full_name');
+                    $report->descrption = $request->input('description');
                     $report->folder_id = $request->input('folder_id');
                     $report->user_id = auth()->user()->id;
                     $report->year = date('Y');
@@ -480,6 +480,35 @@ class ReportController extends Controller
 
                 if ($this->checkFiles($report->documentation, $extension)) {
                     return \Illuminate\Support\Facades\Storage::download($report->documentation, $report->original_name);
+                }
+            } else {
+                return redirect()->back()->with('failed', 'You not Have Authority!');
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+            \Illuminate\Support\Facades\Log::error($e->getMessage());
+            return redirect()->back()->with('failed', $e->getMessage());
+        }
+    }
+
+    /**
+     * View the specified resource from storage.
+     */
+    public function view(Report $report)
+    {
+        try {
+            $this->get_access_page();
+            if ($this->read == 1) {
+                ini_set('max_execution_time', 300);
+
+                $mimeType = [
+                    'pdf' => 'application/pdf',
+                    'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                    'ppt' => 'application/vnd.ms-powerpoint',
+                ];
+
+                if (strtolower($report->extension) == $mimeType['pdf']) {
+                    $filePath = \Illuminate\Support\Facades\Storage::exists($report->documentation);
+                    return redirect($filePath);
                 }
             } else {
                 return redirect()->back()->with('failed', 'You not Have Authority!');

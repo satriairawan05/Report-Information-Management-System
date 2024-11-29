@@ -1,56 +1,75 @@
-(function (jQuery) {
+(function ($) {
     "use strict";
-    $(document).on('click', '[data-load-file="file"]' ,function(){
-        setValueOnModal($(this))
-    })
 
-    function setValueOnModal(__this) {
-        let target = __this.attr('data-load-target')
-        let url = __this.attr('data-url')
-        let title = __this.attr('data-title')
-        let previewUrl = __this.attr('data-preview-url')
-        $('.modal-title').html(title)
-        $('.modal-preview-link').attr('href', previewUrl)
-        loadDocToHtml(target, url)
+    // Event listener for elements with data-load-file="file"
+    $(document).on('click', '[data-load-file="file"]', function () {
+        setValueOnModal($(this));
+    });
+
+    /**
+     * Set modal content based on the clicked element's data attributes.
+     * @param {Object} $element - jQuery object of the clicked element.
+     */
+    function setValueOnModal($element) {
+        const target = $element.attr('data-load-target');
+        const url = $element.attr('data-url');
+        const title = $element.attr('data-title');
+        const previewUrl = $element.attr('data-preview-url');
+
+        // Update modal elements with the provided data
+        $('.modal-title').text(title);
+        $('.modal-preview-link').attr('href', previewUrl || '#');
+
+        if (target && url) {
+            loadDocToHtml(target, url);
+        } else {
+            console.error("Missing 'data-load-target' or 'data-url' attributes.");
+        }
     }
 
-    function loadDocToHtml(target, url){
-        $(target).html('')
+    /**
+     * Load document content into the specified target element using officeToHtml plugin.
+     * @param {string} target - The selector of the target container.
+     * @param {string} url - The URL of the document to be loaded.
+     */
+    function loadDocToHtml(target, url) {
+        $(target).empty(); // Clear the target container
         $(target).officeToHtml({
             url: url,
             pdfSetting: {
-                setLang: "",
-                setLangFilesPath: "" /*"include/pdf/lang/locale" - relative to app path*/
+                setLang: "", // Set language for PDF (if needed)
+                setLangFilesPath: "" // Path to language files for PDF (adjust as required)
             }
         });
     }
+
+    // Automatically handle document display based on URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const param = urlParams.get('page-type');
-    let elem
-    if(param !== null) {
+    let element = null;
+
+    if (param) {
         switch (param) {
             case 'pdf':
-                elem = document.getElementById('pdf-container')
+                element = $('#pdf-container');
                 break;
-
             case 'docx':
-                elem = document.getElementById('docx-container')
+                element = $('#docx-container');
                 break;
-
             case 'pptx':
-                elem = document.getElementById('pptx-container')
+                element = $('#pptx-container');
                 break;
-
             case 'xlsx':
-                elem = document.getElementById('xlsx-container')
+                element = $('#xlsx-container');
                 break;
-        
             default:
+                console.warn("Unsupported 'page-type' parameter:", param);
                 break;
         }
-        if(elem !== undefined && elem !== null) {
-            setValueOnModal($(elem))
-            $('#exampleModal').modal('show')
+
+        if (element && element.length) {
+            setValueOnModal(element);
+            $('#exampleModal').modal('show');
         }
     }
-})(jQuery)
+})(jQuery);

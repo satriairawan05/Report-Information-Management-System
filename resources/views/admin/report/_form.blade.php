@@ -11,25 +11,25 @@
     </div>
     <div class="row mb-3">
         <div class="col-12">
-            <label for="full_name">Full Name</label>
-            <input type="text" name="full_name"
-                class="form-control @error('full_name')
-                is-invalid
-            @enderror"
-                placeholder="Ex: Dokumentasi Perjalanan Dinas"
-                value="{{ old('full_name', isset($report) ? $report->full_name : '') }}" autofocus>
-            @error('full_name')
+            <label for="documentation">Documentation</label>
+            <p class="text-dark text-small fs-6">Accepted : PDF,PPT,PPTX,XLS,XLSX,DOC,DOCX,PNG,JPG,JPEG.</p>
+            <input type="file" name="documentation" class="form-control form-control-file"
+                value="{{ old('documentation') }}" accept=".pdf,.ppt,.pptx,.xls,.xlsx,.doc,.docx,.png,.jpg,.jpeg">
+            @error('documentation')
                 <p class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></p>
             @enderror
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-12">
-            <label for="documentation">Documentation</label>
-            <p class="text-dark text-small fs-6">Accepted : PDF,PPT,PPTX,XLS,XLSX,DOC,DOCX,PNG,JPG,JPEG.</p>
-            <input type="file" name="documentation" class="form-control form-control-file"
-                value="{{ old('documentation') }}" accept=".pdf,.ppt,.pptx,.xls,.xlsx,.doc,.docx,.png,.jpg,.jpeg">
-            @error('documentation')
+            <label for="description">Description</label>
+            <input type="text" name="description"
+                class="form-control @error('description')
+                is-invalid
+            @enderror"
+                placeholder="Ex: Dokumentasi Perjalanan Dinas"
+                value="{{ old('description', isset($report) ? $report->description : '') }}" autofocus>
+            @error('description')
                 <p class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></p>
             @enderror
         </div>

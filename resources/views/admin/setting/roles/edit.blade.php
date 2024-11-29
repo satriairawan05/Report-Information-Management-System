@@ -1,14 +1,5 @@
 @extends('admin.layouts.app')
 
-@push('loader')
-    <!-- loader Start -->
-    <div id="loading">
-        <div id="loading-center">
-        </div>
-    </div>
-    <!-- loader END -->
-@endpush
-
 @section('main')
     <div class="content-page">
         <div class="container-fluid">

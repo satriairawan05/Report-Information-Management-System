@@ -1,22 +1,13 @@
 @extends('admin.layouts.app')
 
-@push('loader')
-    <!-- loader Start -->
-    <div id="loading">
-        <div id="loading-center">
-        </div>
-    </div>
-    <!-- loader END -->
-@endpush
-
 @push('css')
     <!-- Viewer Plugin -->
     <!--PDF-->
     <link rel="stylesheet" href="{{ asset('cloudbox/assets/vendor/doc-viewer/include/pdf/pdf.viewer.css') }}">
     <!--Docs-->
     <!--PPTX-->
-    <link rel="stylesheet" href="{{ asset('cloudbox/assets/vendor/doc-viewer/include/PPTXjs/css/pptxjs.css') }}">
-    <link rel="stylesheet" href="{{ asset('cloudbox/assets/vendor/doc-viewer/include/PPTXjs/css/nv.d3.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('ptxjs/css/pptxjs.css') }}">
+    <link rel="stylesheet" href="{{ asset('ptxjs/css/nv.d3.min.css') }}">
     <!--All Spreadsheet -->
     <link rel="stylesheet" href="{{ asset('cloudbox/assets/vendor/doc-viewer/include/SheetJS/handsontable.full.min.css') }}">
     <!--Image viewer-->
@@ -34,11 +25,11 @@
     <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/docx/jszip-utils.js') }}"></script>
     <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/docx/mammoth.browser.min.js') }}"></script>
     <!--PPTX-->
-    <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/PPTXjs/js/filereader.js') }}"></script>
-    <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/PPTXjs/js/d3.min.js') }}"></script>
-    <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/PPTXjs/js/nv.d3.min.js') }}"></script>
-    <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/PPTXjs/js/pptxjs.js') }}"></script>
-    <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/PPTXjs/js/divs2slides.js') }}"></script>
+    <script src="{{ asset('ptxjs/js/filereader.js') }}"></script>
+    <script src="{{ asset('ptxjs/js/d3.min.js') }}"></script>
+    <script src="{{ asset('ptxjs/js/nv.d3.min.js') }}"></script>
+    <script src="{{ asset('ptxjs/js/pptxjs.js') }}"></script>
+    <script src="{{ asset('ptxjs/js/divs2slides.js') }}"></script>
     <!--All Spreadsheet -->
     <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/SheetJS/handsontable.full.min.js') }}"></script>
     <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/SheetJS/xlsx.full.min.js') }}"></script>
@@ -48,6 +39,10 @@
     </script>
     <!--officeToHtml-->
     <script src="{{ asset('cloudbox/assets/vendor/doc-viewer/include/officeToHtml/officeToHtml.js') }}"></script>
+
+    <!-- app Doc Viewer-->
+    <script src="{{ asset('cloudbox/assets/js/app.js') }}"></script>
+    <script src="{{ asset('cloudbox/assets/js/doc-viewer.js') }}" defer></script>
 @endpush
 
 @section('main')
@@ -147,11 +142,24 @@
                             </div>
                         @endif
                         @if ($report->extension == 'ppt' || $report->extension == 'pptx')
+                            @push('js')
+                            <script type="text/javascript">
+                                $("#resolte-contaniner").pptxToHtml({ 
+                                    pptxFileUrl: "{{ asset('storage/'.$report->documentation) }}", 
+                                    slidesScale: "50%", 
+                                    slideMode: false, 
+                                    keyBoardShortCut: false 
+                                }); 
+                            </script>
+                            @endpush
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-block card-stretch card-height">
                                     <div class="card-body image-thumb">
                                         <div class="iq-thumb mb-4 rounded p-3 text-center">
                                             <div class="iq-image-overlay"></div>
+                                            {{-- <a href="{{ route('report.view', $report->id) }}" target="__blank" class="text-decoration-none cursor-pointer">
+                                                <img src="{{ asset('cloudbox/assets/images/layouts/page-7/ppt.png') }}"
+                                                    class="img-fluid" alt="{{ $report->original_name }}"></a> --}}
                                             <a href="{{ asset('storage/' . $report->documentation) }}"
                                                 data-title="{{ $report->original_name }}" data-load-file="file"
                                                 data-load-target="#resolte-contaniner"
@@ -190,13 +198,19 @@
                                     <div class="card-body image-thumb">
                                         <div class="iq-thumb mb-4 rounded p-3 text-center">
                                             <div class="iq-image-overlay"></div>
-                                            <a href="{{ asset('storage/' . $report->documentation) }}"
+                                            <a href="{{ asset('storage/' . $report->documentation) }}" target="_blank"
+                                                style="cursor: pointer;">
+                                                <img src="{{ asset('cloudbox/assets/images/layouts/page-7/pdf.png') }}"
+                                                    class="img-fluid" alt="{{ $report->original_name }}">
+                                            </a>
+                                            {{-- <a href="{{ asset('storage/' . $report->documentation) }}"
                                                 data-title="{{ $report->original_name }}" data-load-file="file"
                                                 data-load-target="#resolte-contaniner"
+                                                data-preview-url="{{ asset('storage/' . $report->documentation) }}"
                                                 data-url="{{ asset('storage/' . $report->documentation) }}"
                                                 data-toggle="modal" data-target="#exampleModal"><img
                                                     src="{{ asset('cloudbox/assets/images/layouts/page-7/pdf.png') }}"
-                                                    class="img-fluid" alt="{{ $report->original_name }}"></a>
+                                                    class="img-fluid" alt="{{ $report->original_name }}"></a> --}}
                                         </div>
                                         <div class="d-flex justify-content-center align-items-center">
                                             <h6 class="mr-2">{{ $report->original_name }}</h6>
@@ -269,11 +283,13 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table-borderless tbl-server-info mb-0 table" role="grid" id="user-list-table">
+                                    <table class="table-borderless tbl-server-info mb-0 table" role="grid"
+                                        id="user-list-table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Owner</th>
+                                                <th scope="col">Description</th>
                                                 <th scope="col">Last Edit</th>
                                                 <th scope="col">File Size</th>
                                                 @if ($access['Update'] == 1 || $access['Delete'] == 1)
@@ -290,19 +306,19 @@
                                                                 <div class="icon-small bg-danger mr-3 rounded">
                                                                     <i class="fas fa-file-pdf"></i>
                                                                 </div>
-                                                                <div data-title="{{ $report->original_name }}"
-                                                                    data-load-file="file"
-                                                                    data-load-target="#resolte-contaniner"
-                                                                    data-url="{{ asset('storage/' . $report->documentation) }}"
-                                                                    data-toggle="modal" data-target="#exampleModal"
-                                                                    style="cursor: pointer;">{{ $report->original_name }}
-                                                                </div>
+                                                                <a href="{{ asset('storage/' . $report->documentation) }}"
+                                                                    class="text-decoration-none" target="_blank"
+                                                                    style="cursor:pointer;">
+                                                                    {{ $report->original_name }}
+                                                                </a>
                                                             </div>
                                                         </td>
                                                         <td>{{ $report->user_id == auth()->user()->id ? 'Me' : $report->user->name }}
                                                         </td>
+                                                        <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }} {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size / 1024) }}
+                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton10"
@@ -353,8 +369,10 @@
                                                         </td>
                                                         <td>{{ $report->user_id == auth()->user()->id ? 'Me' : $report->user->name }}
                                                         </td>
+                                                        <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }} {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size / 1024) }}
+                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton11"
@@ -405,8 +423,10 @@
                                                         </td>
                                                         <td>{{ $report->user_id == auth()->user()->id ? 'Me' : $report->user->name }}
                                                         </td>
+                                                        <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }} {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size / 1024) }}
+                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton13"
@@ -457,8 +477,10 @@
                                                         </td>
                                                         <td>{{ $report->user_id == auth()->user()->id ? 'Me' : $report->user->name }}
                                                         </td>
+                                                        <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }} {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size / 1024) }}
+                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton12"
@@ -509,8 +531,10 @@
                                                         </td>
                                                         <td>{{ $report->user_id == auth()->user()->id ? 'Me' : $report->user->name }}
                                                         </td>
+                                                        <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }} {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size / 1024) }}
+                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton10"

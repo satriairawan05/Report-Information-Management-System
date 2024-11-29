@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('user_id')->references('id')->on('users')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete()->nullable();
             $table->string('documentation')->nullable();
             $table->string('original_name')->nullable();
-            $table->string('full_name')->nullable();
+            $table->string('description')->nullable();
             $table->string('year')->nullable();
             $table->string('month')->nullable();
             $table->string('day')->nullable();

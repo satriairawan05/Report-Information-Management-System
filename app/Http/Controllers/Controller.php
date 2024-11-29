@@ -33,13 +33,13 @@ class Controller extends BaseController
     /**
      * check the file from storage when extension is allowed
      *
-     * @param  string $filePath is filePath in resources
+     * @param string $filePath is filePath in resources
      *
-     * @param  array $extension is allowed extension for check before download
+     * @param array $extension is allowed extension for check before download
      *
      * return bool true when filePath and extension is allowed from outher kriteria
      */
-    public function checkFiles(string $filePath, array $extension)
+    public function checkFiles(string $filePath, array $extension): bool
     {
         // Get the file extension from the path
         $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
@@ -60,6 +60,7 @@ class Controller extends BaseController
         \Illuminate\Support\Facades\Log::info("File is valid and ready for download. Extension: '.{$fileExtension}'");
         return true;
     }
+
 
     /**
      *

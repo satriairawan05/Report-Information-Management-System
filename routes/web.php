@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('folder', \App\Http\Controllers\Admin\FolderController::class)->except(['show']);
     Route::resource('report', \App\Http\Controllers\Admin\ReportController::class)->except(['show']);
     Route::get('report/{report}/download', [\App\Http\Controllers\Admin\ReportController::class, 'download'])->name('report.download');
+    Route::get('report/{report}/view',[\App\Http\Controllers\Admin\ReportController::class,'view'])->name('report.view');
 
     Route::prefix('setting')->group(function () {
         Route::resource('role', \App\Http\Controllers\Admin\Setting\GroupController::class)->except(['show'])->names('group');
