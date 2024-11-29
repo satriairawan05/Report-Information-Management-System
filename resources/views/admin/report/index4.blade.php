@@ -143,14 +143,14 @@
                         @endif
                         @if ($report->extension == 'ppt' || $report->extension == 'pptx')
                             @push('js')
-                            <script type="text/javascript">
-                                $("#resolte-contaniner").pptxToHtml({ 
-                                    pptxFileUrl: "{{ asset('storage/'.$report->documentation) }}", 
-                                    slidesScale: "50%", 
-                                    slideMode: false, 
-                                    keyBoardShortCut: false 
-                                }); 
-                            </script>
+                                <script type="text/javascript">
+                                    $("#resolte-contaniner").pptxToHtml({
+                                        pptxFileUrl: "{{ asset('storage/' . $report->documentation) }}",
+                                        slidesScale: "50%",
+                                        slideMode: false,
+                                        keyBoardShortCut: false
+                                    });
+                                </script>
                             @endpush
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-block card-stretch card-height">
@@ -460,6 +460,16 @@
                                                     </tr>
                                                 @endif
                                                 @if ($report->extension == 'ppt' || $report->extension == 'pptx')
+                                                    @push('js')
+                                                        <script type="text/javascript">
+                                                            $("#resolte-contaniner").pptxToHtml({
+                                                                pptxFileUrl: "{{ asset('storage/' . $report->documentation) }}",
+                                                                slidesScale: "50%",
+                                                                slideMode: false,
+                                                                keyBoardShortCut: false
+                                                            });
+                                                        </script>
+                                                    @endpush
                                                     <tr>
                                                         <td>
                                                             <div class="d-flex align-items-center">
