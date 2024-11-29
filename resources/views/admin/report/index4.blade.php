@@ -143,14 +143,29 @@
                         @endif
                         @if ($report->extension == 'ppt' || $report->extension == 'pptx')
                             @push('js')
-                                <script type="text/javascript">
-                                    $("#resolte-contaniner").pptxToHtml({
-                                        pptxFileUrl: "{{ asset('storage/' . $report->documentation) }}",
-                                        slidesScale: "50%",
-                                        slideMode: false,
-                                        keyBoardShortCut: false
-                                    });
-                                </script>
+                            <script type="text/javascript">
+                                $("#resolte-contaniner").pptxToHtml({ 
+                                    pptxFileUrl: "{{ asset('storage/'.$report->documentation) }}", 
+                                    slideMode: true,
+                                    slidesScale: "55%",
+                                    keyBoardShortCut: true, 
+                                    mediaProcess: true, /** true,false: if true then process video and audio files */ 
+                                    slideModeConfig: { //on slide mode (slideMode: true) 
+                                        first: 1, 
+                                        nav: true, /** true,false : show or not nav buttons*/ 
+                                        navTxtColor: "white", /** color */ 
+                                        showPlayPauseBtn: true,/** true,false */ 
+                                        showSlideNum: true, /** true,false */ 
+                                        showTotalSlideNum: true, /** true,false */ 
+                                        autoSlide: 2, /** false or seconds (the pause time between slides) , F8 to active(keyBoardShortCut: true) */ 
+                                        randomAutoSlide: false, /** true,false ,autoSlide:true */ 
+                                        loop: false, /** true,false */ 
+                                        background: "black", /** false or color*/ 
+                                        transition: "slid", /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */ 
+                                        transitionTime: 1 /** transition time in seconds */ 
+                                    } 
+                                }); 
+                            </script>
                             @endpush
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-block card-stretch card-height">
@@ -460,16 +475,6 @@
                                                     </tr>
                                                 @endif
                                                 @if ($report->extension == 'ppt' || $report->extension == 'pptx')
-                                                    @push('js')
-                                                        <script type="text/javascript">
-                                                            $("#resolte-contaniner").pptxToHtml({
-                                                                pptxFileUrl: "{{ asset('storage/' . $report->documentation) }}",
-                                                                slidesScale: "50%",
-                                                                slideMode: false,
-                                                                keyBoardShortCut: false
-                                                            });
-                                                        </script>
-                                                    @endpush
                                                     <tr>
                                                         <td>
                                                             <div class="d-flex align-items-center">
