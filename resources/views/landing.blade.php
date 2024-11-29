@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center justify-content-center">
                 <img src="{{ asset('img/logo.png') }}" alt="{{ env('APP_NAME') }}" class="w-25 h-25">
             </div>
-            <h1 class="h2">Report App</h1>
+            <h1 class="h2">Masuk Web</h1>
             <h3 class="h4">Sistem Informasi Manajemen Laporan di Dinas Pangan, Tanaman Pangan dan Holtikultural Provinsi
                 Kalimantan Timur</h3>
         </div>

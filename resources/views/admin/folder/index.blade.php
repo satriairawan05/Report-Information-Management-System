@@ -1,14 +1,5 @@
 @extends('admin.layouts.app')
 
-@push('loader')
-    <!-- loader Start -->
-    <div id="loading">
-        <div id="loading-center">
-        </div>
-    </div>
-    <!-- loader END -->
-@endpush
-
 @push('css')
     <!-- Viewer Plugin -->
     <!--PDF-->
