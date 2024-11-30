@@ -112,16 +112,9 @@ class ReportController extends Controller
                         ->orWhere('user_id', auth()->user()->id)
                         ->paginate(8);
 
-                    foreach ($folders as $folder) {
-                        $reportCount = Report::where('folder_id', $folder->id)
-                            ->where('user_id', auth()->user()->id)
-                            ->count();
-                    }
-
                     return view('admin.report.index', [
                         'name' => $this->name,
                         'folders' => $folders,
-                        'reportCount' => $reportCount,
                     ]);
                 } else {
                     if ($month && $year && $folderId) {
@@ -164,16 +157,9 @@ class ReportController extends Controller
                     $folders = \App\Models\Folder::where('user_id', auth()->user()->id)
                         ->paginate(8);
 
-                    foreach ($folders as $folder) {
-                        $reportCount = Report::where('folder_id', $folder->id)
-                            ->where('user_id', auth()->user()->id)
-                            ->count();
-                    }
-
                     return view('admin.report.index', [
                         'name' => $this->name,
                         'folders' => $folders,
-                        'reportCount' => $reportCount,
                     ]);
                 }
             } else {

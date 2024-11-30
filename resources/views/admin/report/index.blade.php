@@ -21,10 +21,10 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <a href="?folder_id={{ $folder->id }}" class="folder">
-                                    <div
-                                        class="icon-small {{ $folder->user_id == auth()->user()->id ? 'bg-primary' : 'bg-secondary' }} mb-4 rounded">
-                                        <i class="fas fa-folder"></i>
-                                    </div>
+                                        <div
+                                            class="icon-small {{ $folder->user_id == auth()->user()->id ? 'bg-primary' : 'bg-secondary' }} mb-4 rounded">
+                                            <i class="fas fa-folder"></i>
+                                        </div>
                                     </a>
                                 </div>
                                 <p class="folder">
@@ -35,8 +35,14 @@
                                 <p class="mb-1"><i
                                         class="fas fa-user {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
                                     {{ $folder->user_id == auth()->user()->id ? 'Me' : $folder->user->name }}</p>
-                                <p class="mb-0"><i class="fas fa-file-archive {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
-                                        {{ $reportCount }} Files</p>
+                                @php
+                                    $reportCount = \App\Models\Report::where('folder_id', $folder->id)
+                                        ->where('user_id', auth()->user()->id)
+                                        ->count();
+                                @endphp
+                                <p class="mb-0"><i
+                                        class="fas fa-file-archive {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
+                                    {{ $reportCount }} Files</p>
                                 </p>
                             </div>
                         </div>
