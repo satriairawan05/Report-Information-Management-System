@@ -36,9 +36,8 @@
                                         class="fas fa-user {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
                                     {{ $folder->user_id == auth()->user()->id ? 'Me' : $folder->user->name }}</p>
                                 @php
-                                    $user = \App\Models\User::where('id',auth()->user()->id)->first();
                                     $reportCount = \App\Models\Report::where('folder_id', $folder->id)
-                                        ->where('user_id', $user->id)
+                                        ->where('user_id', $folder->user->id)
                                         ->count();
                                 @endphp
                                 <p class="mb-0"><i
