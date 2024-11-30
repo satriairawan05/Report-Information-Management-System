@@ -110,6 +110,7 @@ class ReportController extends Controller
                     // Bagian ini tetap dipertahankan
                     $folders = \App\Models\Folder::where('is_for_admin', true)
                         ->orWhere('user_id', auth()->user()->id)
+                        ->latest('id')
                         ->paginate(8);
 
                     return view('admin.report.index', [
@@ -155,6 +156,7 @@ class ReportController extends Controller
 
                     // Bagian ini tetap sesuai permintaan
                     $folders = \App\Models\Folder::where('user_id', auth()->user()->id)
+                        ->latest('id')
                         ->paginate(8);
 
                     return view('admin.report.index', [
