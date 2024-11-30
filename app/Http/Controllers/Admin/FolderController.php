@@ -72,7 +72,7 @@ class FolderController extends Controller
                     // User biasa: Hanya ambil folder milik user yang sedang login
                     $folders = Folder::with('user')
                         ->where('user_id', auth()->user()->id)
-                        ->latest('id')
+                       
                         ->paginate(8);
                 }
 
