@@ -143,29 +143,40 @@
                         @endif
                         @if ($report->extension == 'ppt' || $report->extension == 'pptx')
                             @push('js')
-                            <script type="text/javascript">
-                                $("#resolte-contaniner").pptxToHtml({ 
-                                    pptxFileUrl: "{{ asset('storage/'.$report->documentation) }}", 
-                                    slideMode: true,
-                                    slidesScale: "55%",
-                                    keyBoardShortCut: true, 
-                                    mediaProcess: true, /** true,false: if true then process video and audio files */ 
-                                    slideModeConfig: { //on slide mode (slideMode: true) 
-                                        first: 1, 
-                                        nav: true, /** true,false : show or not nav buttons*/ 
-                                        navTxtColor: "white", /** color */ 
-                                        showPlayPauseBtn: true,/** true,false */ 
-                                        showSlideNum: true, /** true,false */ 
-                                        showTotalSlideNum: true, /** true,false */ 
-                                        autoSlide: 2, /** false or seconds (the pause time between slides) , F8 to active(keyBoardShortCut: true) */ 
-                                        randomAutoSlide: false, /** true,false ,autoSlide:true */ 
-                                        loop: false, /** true,false */ 
-                                        background: "black", /** false or color*/ 
-                                        transition: "slid", /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */ 
-                                        transitionTime: 1 /** transition time in seconds */ 
-                                    } 
-                                }); 
-                            </script>
+                                <script type="text/javascript">
+                                    $("#resolte-contaniner").pptxToHtml({
+                                        pptxFileUrl: "{{ asset('storage/' . $report->documentation) }}",
+                                        slideMode: true,
+                                        slidesScale: "55%",
+                                        keyBoardShortCut: true,
+                                        mediaProcess: true,
+                                        /** true,false: if true then process video and audio files */
+                                        slideModeConfig: { //on slide mode (slideMode: true)
+                                            first: 1,
+                                            nav: true,
+                                            /** true,false : show or not nav buttons*/
+                                            navTxtColor: "white",
+                                            /** color */
+                                            showPlayPauseBtn: true,
+                                            /** true,false */
+                                            showSlideNum: true,
+                                            /** true,false */
+                                            showTotalSlideNum: true,
+                                            /** true,false */
+                                            autoSlide: 2,
+                                            /** false or seconds (the pause time between slides) , F8 to active(keyBoardShortCut: true) */
+                                            randomAutoSlide: false,
+                                            /** true,false ,autoSlide:true */
+                                            loop: false,
+                                            /** true,false */
+                                            background: "black",
+                                            /** false or color*/
+                                            transition: "slid",
+                                            /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */
+                                            transitionTime: 1 /** transition time in seconds */
+                                        }
+                                    });
+                                </script>
                             @endpush
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-block card-stretch card-height">
@@ -298,6 +309,11 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="table-responsive">
+                                    {{-- <form action="?search={{ request()->input('search') }}" method="get">
+                                        @csrf
+                                        <input type="text" name="search" id="search" placeholder="Ex: Budi"
+                                            class="form-control">
+                                    </form> --}}
                                     <table class="table-borderless tbl-server-info mb-0 table" role="grid"
                                         id="user-list-table">
                                         <thead>
@@ -332,8 +348,8 @@
                                                         </td>
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }}
-                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size * 1024) }}
+                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton10"
@@ -386,8 +402,8 @@
                                                         </td>
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }}
-                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size * 1024) }}
+                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton11"
@@ -440,8 +456,8 @@
                                                         </td>
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }}
-                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size * 1024) }}
+                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton13"
@@ -494,8 +510,8 @@
                                                         </td>
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }}
-                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size * 1024) }}
+                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton12"
@@ -548,8 +564,8 @@
                                                         </td>
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
-                                                        <td>{{ ceil($report->size / 1024) }}
-                                                            {{ ceil($report->size / 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                        <td>{{ ceil($report->size * 1024) }}
+                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton10"

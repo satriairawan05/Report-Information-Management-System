@@ -69,6 +69,7 @@ class ReportController extends Controller
                 $folderId = request()->input('folder_id');
                 $year = request()->input('year');
                 $month = request()->input('month');
+
                 if (auth()->user()->role_id == 1) {
                     if ($month && $year && $folderId) {
                         $reports = Report::where('folder_id', $folderId)
@@ -107,12 +108,8 @@ class ReportController extends Controller
                     }
 
                     // Bagian ini tetap dipertahankan
-                    $folders = \App\Models\Folder::with('user')
-                        ->where(function ($query) {
-                            $query->where('is_for_admin', true)
-                                ->orWhere('user_id', auth()->user()->id);
-                        })
-                        ->latest('id')
+                    $folders = \App\Models\Folder::where('is_for_admin', true)
+                        ->orWhere('user_id', auth()->user()->id)
                         ->paginate(8);
 
                     foreach ($folders as $folder) {
@@ -164,9 +161,7 @@ class ReportController extends Controller
                     }
 
                     // Bagian ini tetap sesuai permintaan
-                    $folders = \App\Models\Folder::with('user')
-                        ->where('user_id', auth()->user()->id)
-                        ->latest('id')
+                    $folders = \App\Models\Folder::where('user_id', auth()->user()->id)
                         ->paginate(8);
 
                     foreach ($folders as $folder) {
