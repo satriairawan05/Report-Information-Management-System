@@ -69,6 +69,7 @@ class ReportController extends Controller
                 $folderId = request()->input('folder_id');
                 $year = request()->input('year');
                 $month = request()->input('month');
+
                 if (auth()->user()->role_id == 1) {
                     if ($month && $year && $folderId) {
                         $reports = Report::where('folder_id', $folderId)
@@ -107,24 +108,14 @@ class ReportController extends Controller
                     }
 
                     // Bagian ini tetap dipertahankan
-                    $folders = \App\Models\Folder::with('user')
-                        ->where(function ($query) {
-                            $query->where('is_for_admin', true)
-                                ->orWhere('user_id', auth()->user()->id);
-                        })
+                    $folders = \App\Models\Folder::with('user')->where('is_for_admin', true)
+                        ->orWhere('user_id', auth()->user()->id)
                         ->latest('id')
                         ->paginate(8);
-
-                    foreach ($folders as $folder) {
-                        $reportCount = Report::where('folder_id', $folder->id)
-                            ->where('user_id', auth()->user()->id)
-                            ->count();
-                    }
 
                     return view('admin.report.index', [
                         'name' => $this->name,
                         'folders' => $folders,
-                        'reportCount' => $reportCount,
                     ]);
                 } else {
                     if ($month && $year && $folderId) {
@@ -164,21 +155,13 @@ class ReportController extends Controller
                     }
 
                     // Bagian ini tetap sesuai permintaan
-                    $folders = \App\Models\Folder::with('user')
-                        ->where('user_id', auth()->user()->id)
+                    $folders = \App\Models\Folder::with('user')->where('user_id', auth()->user()->id)
                         ->latest('id')
                         ->paginate(8);
-
-                    foreach ($folders as $folder) {
-                        $reportCount = Report::where('folder_id', $folder->id)
-                            ->where('user_id', auth()->user()->id)
-                            ->count();
-                    }
 
                     return view('admin.report.index', [
                         'name' => $this->name,
                         'folders' => $folders,
-                        'reportCount' => $reportCount,
                     ]);
                 }
             } else {
