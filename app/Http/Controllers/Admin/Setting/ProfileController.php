@@ -138,7 +138,7 @@ class ProfileController extends Controller
                     $userActive = $user->find(request()->segment(3));
                     $userActive->name = $request->input('name');
                     $userActive->email = $request->input('email');
-                    $userActive->password = \Illuminate\Support\Facades\Hash::make($user->find(request()->segment(3)));
+                    $userActive->password = \Illuminate\Support\Facades\Hash::make($request->input('password'));
                     $userActive->nip = $request->input('nip');
                     $userActive->rank = $request->input('rank');
                     $userActive->group = $request->input('group');
