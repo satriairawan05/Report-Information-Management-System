@@ -106,8 +106,6 @@ class ProfileController extends Controller
                     'userActive' => $userActive,
                     'roles' => $role
                 ]);
-
-                dd($userActive);
             } else {
                 return redirect()->back()->with('failed', 'You not Have Authority!');
             }
