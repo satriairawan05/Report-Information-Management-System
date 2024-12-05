@@ -135,7 +135,6 @@ class ProfileController extends Controller
                 ]);
 
                 if (!$validated->fails()) {
-                    dd($user->find(request()->segment(3)));
                     $userActive = $user->find(request()->segment(3));
                     $userActive->name = $request->input('name');
                     $userActive->email = $request->input('email');
