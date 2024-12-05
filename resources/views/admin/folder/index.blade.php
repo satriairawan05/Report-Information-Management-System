@@ -107,6 +107,11 @@
                                 <p class="mb-1"><i
                                         class="fas fa-user {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
                                     {{ $folder->user_id == auth()->user()->id ? 'Me' : $folder->user->name }}</p>
+                                @php
+                                    $reportCount = \App\Models\Report::where('folder_id', $folder->id)
+                                        ->where('user_id', $folder->user->id)
+                                        ->count();
+                                @endphp
                                 <p class="mb-0"><i class="fas fa-file-archive {{ $folder->user_id == auth()->user()->id ? 'text-primary' : 'text-secondary' }} font-size-20 mr-2"></i>
                                         {{ $reportCount }} Files</p>
                                 </p>

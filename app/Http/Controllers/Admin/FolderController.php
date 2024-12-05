@@ -76,15 +76,10 @@ class FolderController extends Controller
                         ->paginate(8);
                 }
 
-                foreach ($folders as $folder) {
-                    $reportCount = \App\Models\Report::where('folder_id', $folder->id)->where('user_id', auth()->user()->id)->count();
-                }
-
                 return view('admin.folder.index', [
                     'name' => $this->name,
                     'access' => $this->access,
-                    'folders' => $folders,
-                    'reportCount' => $reportCount
+                    'folders' => $folders
                 ]);
             } else {
                 return redirect()->back()->with('failed', 'You not Have Authority!');
