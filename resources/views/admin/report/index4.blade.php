@@ -349,7 +349,7 @@
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
                                                         <td>{{ ceil($report->size * 1024) }}
-                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                            KB</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton10"
@@ -403,7 +403,7 @@
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
                                                         <td>{{ ceil($report->size * 1024) }}
-                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                            KB</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton11"
@@ -457,7 +457,7 @@
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
                                                         <td>{{ ceil($report->size * 1024) }}
-                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                            KB</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton13"
@@ -511,7 +511,7 @@
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
                                                         <td>{{ ceil($report->size * 1024) }}
-                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                            KB</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton12"
@@ -565,7 +565,7 @@
                                                         <td>{{ $report->description }}</td>
                                                         <td>{{ $report->updated_at->format('M d, Y') }}</td>
                                                         <td>{{ ceil($report->size * 1024) }}
-                                                            {{ ceil($report->size * 1024) > 1024 ? 'MB' : 'KB' }}</td>
+                                                           KB</td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <span class="dropdown-toggle" id="dropdownMenuButton10"
