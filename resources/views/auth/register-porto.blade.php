@@ -100,7 +100,6 @@
                                     <label for="role_id">Role</label>
                                     <select id="role" class="form-control @error('role_id') is-invalid @enderror"
                                         name="role_id">
-                                        <option selected>Without Role</option>
                                         @foreach ($role as $d)
                                             @if (old('role_id') == $d->id)
                                                 <option value="{{ $d->id }}" selected>{{ $d->group_name }}
