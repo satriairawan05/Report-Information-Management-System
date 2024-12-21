@@ -8,8 +8,9 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script>
-                </span>  <a href="https://www.linkedin.com/in/satriai418/" class="text-dark"></a>
+             <!-- </span>  <a href="https://www.linkedin.com/in/satriai418/" class="text-dark"></a>*/
             </div>
         </div>
     </div>
 </footer>
+-->

@@ -14,7 +14,7 @@
             @if (auth()->user())
                 <a href="{{ route('home') }}" class="btn btn-dark">Home</a>
             @else
-                <a href="{{ route('login') }}" class="btn btn-dark">Login</a>
+                <a href="{{ route('login') }}" class="btn btn-dark">Sign In</a>
                 <a href="{{ route('register') }}" class="btn btn-dark">Register</a>
             @endif
         </div>

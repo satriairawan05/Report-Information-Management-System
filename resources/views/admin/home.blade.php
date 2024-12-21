@@ -17,8 +17,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="h1">Welcome, {{ auth()->user()->name }}!</h2>
-                    <h4 class="h5">“Untuk menang besar, terkadang Anda harus mengambil risiko yang besar pula.” - Bill Gates
-                    </h4>
+                    
                 </div>
             </div>
         </div>

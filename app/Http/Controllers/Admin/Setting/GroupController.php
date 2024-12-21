@@ -138,7 +138,8 @@ class GroupController extends Controller
                 ]);
 
                 if (!$validate->fails()) {
-                    $role = $group->find(request()->segment(2));
+                    $role = $group->find(request()->segment(3));
+
                     Group::where('group_id', $role->group_id)->update(['group_name' => $request->input('group_name')]);
 
                     $pages = \App\Models\Page::all();
