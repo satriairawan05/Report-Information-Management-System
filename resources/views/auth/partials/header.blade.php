@@ -34,18 +34,29 @@
     <script src="{{ asset('assets/vendor/modernizr/modernizr.js') }}"></script>
     <script src="{{ asset('assets/master/style-switcher/style.switcher.localstorage.js') }}"></script>
     <style>
-    .card-body {
-        border-top: 5px solid black !important;
-    }
+        .card-body {
+            border-top: 5px solid black !important;
+        }
 
-    .text-dark {
-        color: black !important;
-    }
+        .text-dark {
+            color: black !important;
+        }
 
-    .btn-dark, .bg-dark, {
+        .btn-dark,
+        .bg-dark,
+        {
         background-color: black !important;
-    }
+        }
+
+        .background-image {
+            background-image: url('/img/dptph.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100%;
+        }
     </style>
 </head>
 
-<body>
+<body class="background-image">

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!--My CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/noty/lib/noty.css" rel="stylesheet">
     @stack('css')
 </head>
 
@@ -81,52 +82,27 @@
     @stack('js')
 
     <!-- Sweetalert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/js/sweetalert2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/noty"></script>
     @if (session('success'))
         <script type="text/javascript">
-            let successTime;
-            Swal.fire({
-                title: "Success!",
-                text: "{{ session('success') }}",
-                timer: 5000,
-                icon: 'success',
-                timerProgressBar: true,
-                confirmButtonText: 'Oke',
-                didOpen: () => {
-                    successTime = setInterval(() => {}, 100)
-                },
-                willClose: () => {
-
-                }
-            }).then((result) => {
-                if (result.dismiss === Swal.DismissReason.timer) {
-
-                }
-            });
+            new Noty({
+                type: 'success',
+                text: '{{ session('success') }}',
+                layout: 'topRight',
+                timeout: 10000,
+                theme: 'metroui',
+            }).show();
         </script>
     @endif
     @if (session('failed'))
         <script type="text/javascript">
-            let failedTime;
-            Swal.fire({
-                title: "Fail!",
-                text: "{{ session('failed') }}",
-                timer: 500000,
-                icon: 'error',
-                timerProgressBar: true,
-                confirmButtonText: 'Oke',
-                didOpen: () => {
-                    failedTime = setInterval(() => {}, 100)
-                },
-                willClose: () => {
-
-                }
-            }).then((result) => {
-                if (result.dismiss === Swal.DismissReason.timer) {
-
-                }
-            });
+            new Noty({
+                type: 'danger',
+                text: '{{ session('failed') }}',
+                layout: 'topRight',
+                timeout: 10000,
+                theme: 'sunset',
+            }).show();
         </script>
     @endif
 
