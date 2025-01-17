@@ -26,8 +26,7 @@
                                 aria-label="Close"></button>
                         </div>
                     @endif
-                    <form action="{{ route('login') }}" method="post"
-                        onsubmit="btnsubmit.disabled=true; return true;">
+                    <form action="{{ route('login') }}" method="post" onsubmit="btnsubmit.disabled=true; return true;">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="email">Email</label>
@@ -40,13 +39,19 @@
                                     <i class="bx bx-envelope text-4 text-dark"></i>
                                 </span>
                                 @error('email')
-                                    <small class="invalid-feedback" role="alert"><strong>{{ $errors->get('email')[0] }}</strong></small>
+                                    <small class="invalid-feedback"
+                                        role="alert"><strong>{{ $errors->get('email')[0] }}</strong></small>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <div class="clearfix">
                                 <label for="password" class="float-start">Password</label>
+                                @if (Route::has('password.request'))
+                                    <a class="float-end text-dark" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                                 {{-- <a href="pages-recover-password.html" class="float-end">Lost Password?</a> --}}
                             </div>
                             <div class="input-group">
@@ -58,7 +63,8 @@
                                             class="bx bx-lock text-4 text-dark"></i></a>
                                 </span>
                                 @error('password')
-                                    <small class="invalid-feedback" role="alert"><strong>{{ $errors->get('password')[0] }}</strong></small>
+                                    <small class="invalid-feedback"
+                                        role="alert"><strong>{{ $errors->get('password')[0] }}</strong></small>
                                 @enderror
                             </div>
                         </div>

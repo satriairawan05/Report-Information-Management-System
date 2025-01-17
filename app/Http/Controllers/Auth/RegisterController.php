@@ -52,7 +52,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role_id' => ['required','string','max:255']
         ]);
     }
 
@@ -68,7 +67,6 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => $data['role_id']
         ]);
     }
 
@@ -79,8 +77,6 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('auth.register-porto',[
-            'role' => \App\Models\Group::select(['group_id as id','group_name'])->where('group_id','>',1)->get()
-        ]);
+        return view('auth.register-porto');
     }
 }
