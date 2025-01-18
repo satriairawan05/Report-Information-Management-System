@@ -10,7 +10,7 @@
                 class="form-control @error('name')
                 is-invalid
             @enderror"
-                placeholder="Ex: Perjalanan Dinas" value="{{ isset($folder) ? old('name',$folder->name) : old('name') }}" autofocus>
+                placeholder="Ex: Laporan Harian" value="{{ isset($folder) ? old('name',$folder->name) : old('name') }}" autofocus>
             @error('name')
                 <small class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></small>
             @enderror
