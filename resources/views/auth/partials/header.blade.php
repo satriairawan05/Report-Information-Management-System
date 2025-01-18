@@ -16,7 +16,7 @@
         type="text/css">
     <!-- fevicon -->
     <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/gif" />
-    <title>{{ env('APP_NAME') }} || {{ $title }}</title>
+    <title>{{ config('app.name') }} || {{ $title }}</title>
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/animate/animate.compat.css') }}">

@@ -1,73 +1,97 @@
-@extends('layouts.app')
+@extends('auth.layouts.app', ['title' => 'Sign In'])
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
+@section('auth')
+    <section class="body-sign">
+        <div class="center-sign">
+            <a href="{{ route('landing-page') }}" class="logo float-start">
+                <img src="{{ asset('img/logo.png') }}" height="50" alt="{{ env('APP_NAME') }}" />
+            </a>
+            <div class="panel card-sign">
+                <div class="card-title-sign mt-3 text-end">
+                    <h2 class="title text-uppercase bg-dark font-weight-bold m-0"><i
+                            class="fa fa-user-circle text-6 position-relative top-5 me-1"></i> Sign In</h2>
+                </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Success!</strong> {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session('loginError'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Failed!</strong> {{ session('loginError') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <form action="{{ route('login') }}" method="post" onsubmit="btnsubmit.disabled=true; return true;">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+                        <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <div class="input-group">
+                                <input name="email" type="email"
+                                    class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                    placeholder="Example : budi@gmail.com" value="{{ old('email') }}" autocomplete="email"
+                                    autofocus />
+                                <span class="input-group-text">
+                                    <i class="bx bx-envelope text-4 text-dark"></i>
+                                </span>
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <small class="invalid-feedback"
+                                        role="alert"><strong>{{ $errors->get('email')[0] }}</strong></small>
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
+                        <div class="form-group mb-3">
+                            <div class="clearfix">
+                                <label for="password" class="float-start">Password</label>
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="float-end text-dark" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                {{-- <a href="pages-recover-password.html" class="float-end">Lost Password?</a> --}}
+                            </div>
+                            <div class="input-group">
+                                <input name="password" type="password" id="password"
+                                    class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                    placeholder="Enter Password" maxlength="8" />
+                                <span class="input-group-text">
+                                    <a href="javascript:;" id="togglePassword"><i
+                                            class="bx bx-lock text-4 text-dark"></i></a>
+                                </span>
+                                @error('password')
+                                    <small class="invalid-feedback"
+                                        role="alert"><strong>{{ $errors->get('password')[0] }}</strong></small>
+                                @enderror
                             </div>
                         </div>
+                        <div class="row">
+                            {{-- <div class="col-sm-8">
+                                <div class="checkbox-custom checkbox-default">
+                                    <input id="RememberMe" name="rememberme" type="checkbox" />
+                                    <label for="RememberMe">Remember Me</label>
+                                </div>
+                            </div> --}}
+                            <div class="col-12 text-end">
+                                <button type="submit" id="btnsubmit" class="btn btn-dark mt-2">Sign In</button>
+                            </div>
+                        </div>
+                        <span class="line-thru text-uppercase mb-3 mt-3 text-center">
+                            <span>or</span>
+                        </span>
+                        <p class="text-center">Don't have an account yet? <a href="{{ route('register') }}"
+                                class="text-dark">Sign Up!</a></p>
                     </form>
                 </div>
             </div>
+            @include('auth.partials.copyright')
         </div>
-    </div>
-</div>
+    </section>
 @endsection
+
+@push('js')
+    <script type="text/javascript" src="{{ asset('assets/js/auth.js') }}"></script>
+@endpush

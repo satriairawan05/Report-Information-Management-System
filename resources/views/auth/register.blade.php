@@ -1,77 +1,153 @@
-@extends('layouts.app')
+@extends('auth.layouts.app', ['title' => 'Sign Up'])
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
+@section('auth')
+    <section class="body-sign">
+        <div class="center-sign">
+            <a href="{{ route('landing-page') }}" class="logo float-start">
+                <img src="{{ asset('img/logo.png') }}" height="50" alt="{{ env('APP_NAME') }}" />
+            </a>
+            <div class="panel card-sign">
+                <div class="card-title-sign mt-3 text-end">
+                    <h2 class="title text-uppercase bg-dark font-weight-bold m-0"><i
+                            class="fa fa-user-circle text-6 position-relative top-5 me-1"></i> Sign Up</h2>
+                </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Success!</strong> {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session('loginError'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Failed!</strong> {{ session('loginError') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <form method="POST" action="{{ route('register') }}" onsubmit="btnsubmit.disabled=true; return true;">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
+                        <div class="form-group mb-3">
+                            <label for="name">Name</label>
+                            <div class="input-group">
+                                <input name="name" type="text"
+                                    class="form-control form-control-lg @error('name') is-invalid @enderror"
+                                    placeholder="Example : Budi" value="{{ old('name') }}" autofocus />
+                                <span class="input-group-text">
+                                    <i class="bx bx-user text-4 text-dark"></i>
+                                </span>
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <small class="invalid-feedback"
+                                        role="alert"><strong>{{ $errors->get('name')[0] }}</strong></small>
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
+                        <div class="form-group input-group mb-3">
+                            <label for="email">Email</label>
+                            <div class="input-group">
+                                <input name="email" type="email"
+                                    class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                    placeholder="Example : budi@gmail.com" value="{{ old('email') }}"
+                                    autocomplete="email" />
+                                <span class="input-group-text">
+                                    <i class="bx bx-envelope text-4 text-dark"></i>
+                                </span>
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <small class="invalid-feedback"
+                                        role="alert"><strong>{{ $errors->get('email')[0] }}</strong></small>
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="form-group mb-0">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label for="password">Password</label>
+                                    <div class="input-group">
+                                        <input name="password" type="password" id="password"
+                                            class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                            placeholder="Enter Password" autocomplete="new-password" maxlength="20" />
+                                        <span class="input-group-text">
+                                            <a href="javascript:;" id="togglePassword"><i
+                                                    class="bx bx-lock text-4 text-dark"></i></a>
+                                        </span>
+                                        @error('password')
+                                            <small
+                                                class="invalid-feedback"><strong>{{ $errors->get('password')[0] }}</strong></small>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label for="password_confirmation">Confirm Password</label>
+                                    <div class="input-group">
+                                        <input name="password_confirmation" type="password" id="passwordConfirm"
+                                            class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                            placeholder="Enter Confirm Password" autocomplete="new-password"
+                                            maxlength="20" />
+                                        <span class="input-group-text">
+                                            <a href="javascript:;" id="togglePasswordConfirm"><i
+                                                    class="bx bx-lock text-4 text-dark"></i></a>
+                                        </span>
+                                        @error('password')
+                                            <small
+                                                class="invalid-feedback"><strong>{{ $errors->get('password')[0] }}</strong></small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label for="role_id">Role</label>
+                                    <select id="role" class="form-control @error('role_id') is-invalid @enderror"
+                                        name="role_id">
+                                        @foreach ($role as $d)
+                                            @if (old('role_id') == $d->id)
+                                                <option value="{{ $d->id }}" selected>{{ $d->group_name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $d->id }}">{{ $d->group_name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    @error('role_id')
+                                        <small class="invalid-feedback">
+                                            <strong>{{ $errors->get('role_id')[0] }}</strong>
+                                        </small>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <button type="submit" id="btnsubmit" class="btn btn-dark mt-2">Sign Up</button>
                             </div>
                         </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
+                        <span class="line-thru text-uppercase mb-3 mt-3 text-center">
+                            <span>or</span>
+                        </span>
+                        <p class="text-center">Already have an account? <a href="{{ route('login') }}"
+                                class="text-dark">Sign In!</a></p>
                     </form>
                 </div>
             </div>
+            @include('auth.partials.copyright')
         </div>
-    </div>
-</div>
+    </section>
 @endsection
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+
+@push('js')
+    <script type="text/javascript" src="{{ asset('assets/js/auth.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#group').select2();
+        });
+    </script> --}}
+@endpush

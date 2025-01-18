@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <span class="mr-1">
-                   copyright
+                   <!-- copyright -->
                     <script>
                         document.write(new Date().getFullYear())
                     </script>
