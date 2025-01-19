@@ -315,6 +315,8 @@ class ReportController extends Controller
                     'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg|max:5120'
                 ]);
 
+                // dd($request->all());
+
                 if (!$validate->fails()) {
                     $fileDoc = $request->file('documentation');
                     $fileExtension = strtolower($fileDoc->getClientOriginalExtension());
@@ -330,7 +332,7 @@ class ReportController extends Controller
                     $report->size = $fileDoc->getSize() / 1024;
 
                     // Hapus file lama jika ada
-                    if ($request->file('documentation') !== \Illuminate\Support\Facades\Storage::exists($report->documentation)) {
+                    if ($fileDoc || $fileExtension !== $report->extension) {
                         \Illuminate\Support\Facades\Storage::delete($report->documentation);
                         switch (true) {
                             case $fileExtension === 'pdf':

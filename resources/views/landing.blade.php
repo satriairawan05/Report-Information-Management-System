@@ -7,8 +7,8 @@
                 <img src="{{ asset('img/logo.png') }}" alt="{{ env('APP_NAME') }}" class="w-25 h-25">
 </div>
     
-    <h3 class="h4" style="margin-top: 5px; margin-bottom: 5px;">Web Laporan Harian Bidang Hortikultura Pada Dinas Pangan</h3>
-    <h3 class="h4" style="margin-top: 5px; margin-bottom: 5px;">Kota Samarinda</h3>
+    <h3 class="h4" style="margin-top: 5px; margin-bottom: 5px;">Manajemen Laporan Harian Bidang Hortikultura </h3>
+    <h3 class="h4" style="margin-top: 5px; margin-bottom: 5px;">Pada Dinas Pangan Kota Samarinda Berbasis Web</h3>
     <h1 class="h5" style="font-style: italic; margin-top: 10px; margin-bottom: 10px;">Silahkan Masuk untuk Mengakses Sistem</h1>
 </div>
 
