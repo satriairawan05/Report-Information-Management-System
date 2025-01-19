@@ -318,24 +318,7 @@ class ReportController extends Controller
                 if (!$validate->fails()) {
                     $fileDoc = $request->file('documentation');
                     $fileExtension = strtolower($fileDoc->getClientOriginalExtension());
-
-                    // Hapus file lama jika file baru diunggah atau ekstensi berubah
-                    if ($report->documentation && $fileDoc && $fileExtension !== $report->extension) {
-                        \Illuminate\Support\Facades\Storage::delete($report->documentation);
-                    }
-
-                    // Tentukan lokasi penyimpanan berdasarkan jenis file
-                    $storagePath = match (true) {
-                        $fileExtension === 'pdf' => $fileDoc->store('PortableDoc'),
-                        in_array($fileExtension, ['ppt', 'pptx']) => $fileDoc->store('PowerPoint'),
-                        in_array($fileExtension, ['xls', 'xlsx']) => $fileDoc->store('Excel'),
-                        in_array($fileExtension, ['doc', 'docx']) => $fileDoc->store('Document'),
-                        in_array($fileExtension, ['jpg', 'jpeg']) => $fileDoc->store('Image'),
-                        $fileExtension === 'png' => $fileDoc->store('Picture'),
-                        default => redirect()->back()
-                            ->with('error', 'Unsupported file type.')
-                            ->withInput(),
-                    };
+                    \Log::info('File extension: ' . $fileExtension);
 
                     $report->description = $request->input('description');
                     $report->folder_id = $request->input('folder_id');
@@ -344,9 +327,88 @@ class ReportController extends Controller
                     $report->month = date('m');
                     $report->day = date('d');
                     $report->original_name = $fileDoc->getClientOriginalName();
-                    $report->extension = $fileExtension;
+                    $report->extension = $fileDoc->getClientOriginalExtension();
                     $report->size = $fileDoc->getSize() / 1024;
-                    $report->documentation = $storagePath;
+
+                    // Hapus file lama jika ada
+                    if ($request->file('documentation') !== \Illuminate\Support\Facades\Storage::exists($report->documentation)) {
+                        \Illuminate\Support\Facades\Storage::delete($report->documentation);
+                        switch (true) {
+                            case $fileExtension === 'pdf':
+                                // Logika untuk file PDF
+                                $report->documentation = $fileDoc->store('PortableDoc');
+                                break;
+
+                            case in_array($fileExtension, ['ppt', 'pptx']):
+                                // Logika untuk file PPT
+                                $report->documentation = $fileDoc->store('PowerPoint');
+                                break;
+
+                            case in_array($fileExtension, ['xls', 'xlsx']):
+                                // Logika untuk file Excel
+                                $report->documentation = $fileDoc->store('Excel');
+                                break;
+
+                            case in_array($fileExtension, ['doc', 'docx']):
+                                $report->documentation = $fileDoc->store('Document');
+                                // Logika untuk file Word
+                                break;
+
+                            case in_array($fileExtension, ['jpg', 'jpeg']):
+                                $report->documentation = $fileDoc->store('Image');
+                                // Logika untuk file JPG/JPEG
+                                break;
+
+                            case $fileExtension === 'png':
+                                $report->documentation = $fileDoc->store('Picture');
+                                // Logika untuk file PNG
+                                break;
+
+                            default:
+                                // Jika jenis file tidak sesuai
+                                return redirect()->back()
+                                    ->with('error', 'Unsupported file type.')
+                                    ->withInput();
+                        }
+                    } else {
+                        switch (true) {
+                            case $fileExtension === 'pdf':
+                                // Logika untuk file PDF
+                                $report->documentation = $fileDoc->store('PortableDoc');
+                                break;
+
+                            case in_array($fileExtension, ['ppt', 'pptx']):
+                                // Logika untuk file PPT
+                                $report->documentation = $fileDoc->store('PowerPoint');
+                                break;
+
+                            case in_array($fileExtension, ['xls', 'xlsx']):
+                                // Logika untuk file Excel
+                                $report->documentation = $fileDoc->store('Excel');
+                                break;
+
+                            case in_array($fileExtension, ['doc', 'docx']):
+                                $report->documentation = $fileDoc->store('Document');
+                                // Logika untuk file Word
+                                break;
+
+                            case in_array($fileExtension, ['jpg', 'jpeg']):
+                                $report->documentation = $fileDoc->store('Image');
+                                // Logika untuk file JPG/JPEG
+                                break;
+
+                            case $fileExtension === 'png':
+                                $report->documentation = $fileDoc->store('Picture');
+                                // Logika untuk file PNG
+                                break;
+
+                            default:
+                                // Jika jenis file tidak sesuai
+                                return redirect()->back()
+                                    ->with('error', 'Unsupported file type.')
+                                    ->withInput();
+                        }
+                    }
 
                     $report->save();
 
