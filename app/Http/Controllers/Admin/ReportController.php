@@ -318,7 +318,7 @@ class ReportController extends Controller
                 if (!$validate->fails()) {
                     $fileDoc = $request->file('documentation');
                     $fileExtension = strtolower($fileDoc->getClientOriginalExtension());
-                    \Log::info('File extension: ' . $fileExtension);
+                    \Illuminate\Support\Facades\Log::info('File extension: ' . $fileExtension);
 
                     $report->description = $request->input('description');
                     $report->folder_id = $request->input('folder_id');
