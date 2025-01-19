@@ -71,4 +71,16 @@ class RegisterController extends Controller
             'role_id' => $data['role_id']
         ]);
     }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register',[
+            'role' => \App\Models\Group::select(['group_id as id','group_name'])->where('group_id','>',1)->get()
+        ]);
+    }
 }
