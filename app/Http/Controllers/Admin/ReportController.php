@@ -203,7 +203,7 @@ class ReportController extends Controller
             if ($this->create == 1) {
                 $validate = \Illuminate\Support\Facades\Validator::make($request->all(), [
                     'description' => 'required|max:255',
-                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg|max:5120'
+                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg'
                 ]);
 
                 if (!$validate->fails()) {
@@ -312,7 +312,7 @@ class ReportController extends Controller
             if ($this->update == 1 && $report->user_id == auth()->user()->id) {
                 $validate = \Illuminate\Support\Facades\Validator::make($request->all(), [
                     'description' => 'required|max:255',
-                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg|max:5120'
+                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg'
                 ]);
 
                 if (!$validate->fails()) {
