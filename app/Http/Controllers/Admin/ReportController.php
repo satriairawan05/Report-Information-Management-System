@@ -203,7 +203,7 @@ class ReportController extends Controller
             if ($this->create == 1) {
                 $validate = \Illuminate\Support\Facades\Validator::make($request->all(), [
                     'description' => 'required|max:255',
-                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg'
+                    'documentation' => 'required|file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg'
                 ]);
 
                 if (!$validate->fails()) {
@@ -226,10 +226,10 @@ class ReportController extends Controller
                             $report->documentation = $fileDoc->store('PortableDoc');
                             break;
 
-                        case in_array($fileExtension, ['ppt', 'pptx']):
-                            // Logika untuk file PPT
-                            $report->documentation = $fileDoc->store('PowerPoint');
-                            break;
+                        // case in_array($fileExtension, ['ppt', 'pptx']):
+                        //     // Logika untuk file PPT
+                        //     $report->documentation = $fileDoc->store('PowerPoint');
+                        //     break;
 
                         case in_array($fileExtension, ['xls', 'xlsx']):
                             // Logika untuk file Excel
@@ -312,13 +312,13 @@ class ReportController extends Controller
             if ($this->update == 1 && $report->user_id == auth()->user()->id) {
                 $validate = \Illuminate\Support\Facades\Validator::make($request->all(), [
                     'description' => 'required|max:255',
-                    'documentation' => 'required|file|mimes:pdf,ppt,pptx,xls,xlsx,doc,docx,png,jpg,jpeg'
+                    'documentation' => 'required|file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg'
                 ]);
 
                 if (!$validate->fails()) {
                     $fileDoc = $request->file('documentation');
                     $fileExtension = strtolower($fileDoc->getClientOriginalExtension());
-                    \Illuminate\Support\Facades\Log::info('File extension: ' . $fileExtension);
+                    \Log::info('File extension: ' . $fileExtension);
 
                     $report->description = $request->input('description');
                     $report->folder_id = $request->input('folder_id');
@@ -339,10 +339,10 @@ class ReportController extends Controller
                                 $report->documentation = $fileDoc->store('PortableDoc');
                                 break;
 
-                            case in_array($fileExtension, ['ppt', 'pptx']):
-                                // Logika untuk file PPT
-                                $report->documentation = $fileDoc->store('PowerPoint');
-                                break;
+                            // case in_array($fileExtension, ['ppt', 'pptx']):
+                            //     // Logika untuk file PPT
+                            //     $report->documentation = $fileDoc->store('PowerPoint');
+                            //     break;
 
                             case in_array($fileExtension, ['xls', 'xlsx']):
                                 // Logika untuk file Excel
@@ -377,10 +377,10 @@ class ReportController extends Controller
                                 $report->documentation = $fileDoc->store('PortableDoc');
                                 break;
 
-                            case in_array($fileExtension, ['ppt', 'pptx']):
-                                // Logika untuk file PPT
-                                $report->documentation = $fileDoc->store('PowerPoint');
-                                break;
+                            // case in_array($fileExtension, ['ppt', 'pptx']):
+                            //     // Logika untuk file PPT
+                            //     $report->documentation = $fileDoc->store('PowerPoint');
+                            //     break;
 
                             case in_array($fileExtension, ['xls', 'xlsx']):
                                 // Logika untuk file Excel

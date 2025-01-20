@@ -14,7 +14,7 @@
             <label for="documentation">Documentation</label>
             <p class="text-dark text-small fs-6">Accepted : PDF,PPT,PPTX,XLS,XLSX,DOC,DOCX,PNG,JPG,JPEG.</p>
             <input type="file" name="documentation" class="form-control form-control-file"
-                value="{{ old('documentation') }}" accept=".pdf,.ppt,.pptx,.xls,.xlsx,.doc,.docx,.png,.jpg,.jpeg">
+                value="{{ old('documentation') }}" accept=".pdf,.xls,.xlsx,.doc,.docx,.png,.jpg,.jpeg">
             @error('documentation')
                 <p class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></p>
             @enderror
